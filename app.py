@@ -63,7 +63,7 @@ def api_predict_json():
         y_pred = predictEmp(input_df)
         
         # Convert prediction to int and respond
-        return jsonify({'message': "success", "pred":y_pred})
+        return jsonify({'message': "success", "pred":y_pred.item()})
     except Exception as e:
         print("error in API ->", str(e))
         return jsonify({'message': "error", "pred": "None", "e": str(e)}), 400

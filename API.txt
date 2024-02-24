@@ -1,0 +1,23 @@
+/api/predict/jsonList method(post)
+body{
+    "list": ["Sales & Marketing","Bachelor's","sourcing",1,5,3,0,50]
+}
+response{
+    "message": "success",
+    "pred": 1
+}
+
+/api/predict/jsonList method(post)
+body{
+   "list": [
+    ["Sales & Marketing","Master's & above","sourcing",1,5,8,0,49],
+    ["Sales & Marketing","Bachelor's","sourcing",1,5,3,0,50]
+    ]
+}
+response{
+    "message": "success",
+    "pred": [
+        0,
+        1
+    ]
+}
