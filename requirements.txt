@@ -1,13 +1,9 @@
 flask
 flask_restful
+sklearn
 numpy
 pandas
 joblib 
 xgboost
-Pipeline
-request
-reqparse
-Api
-BadRequest
-jsonify
-CORS
+werkzeug
+flask_cors
