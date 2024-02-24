@@ -1,0 +1,17 @@
+flask
+flask_restful
+numpy
+pandas
+joblib 
+xgboost
+Pipeline
+SimpleImputer
+StandardScaler
+OneHotEncoder
+ColumnTransformer
+request
+reqparse
+Api
+BadRequest
+jsonify
+CORS
