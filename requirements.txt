@@ -1,6 +1,6 @@
 flask
 flask_restful
-sklearn
+scikit-learn
 numpy
 pandas
 joblib 
