@@ -14,8 +14,6 @@ fitted_pipeline = joblib.load(curr_path + "/model/fitted_pipeline.joblib")
 clustering  = joblib.load(curr_path + "/model/clustering_model.joblib")
 
 
-cat_columns = ["department","education","recruitment_channel","no_of_trainings","awards_won", "n_cluster"]
-num_columns = ["previous_year_rating","length_of_service","avg_training_score"]
 id_dep_columns = ["employee_id","is_promoted","gender","age","region"]
 feature_cols = ['department', 'education', 'recruitment_channel', 
                 'no_of_trainings', 'previous_year_rating', 

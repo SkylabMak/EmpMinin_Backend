@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_restful import reqparse, Api
 from werkzeug.exceptions import BadRequest
 from flask import jsonify
+from flask_cors import CORS  # Import CORS
 import flask
 
 import numpy as np
@@ -29,6 +30,7 @@ context_dict = {
 }
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes and origins
 api = Api(app)
 
 # # FOR FORM PARSING
@@ -71,28 +73,46 @@ def api_predict_json():
 @app.route('/api/predict/jsonList', methods=['POST'])
 def api_predict_json_list():
     try:
-        # Extract the list of inputs from the request JSON
-        input_list = request.json['list']
-               
+        # Extract the list of inputs from the request JSON, skipping the header
+        full_input_list = request.json['list']
+        header = full_input_list[0]  # This is your header row
+        data_rows = full_input_list[1:]  # Skip the header row for processing
+        # print("all row",data_rows)
+        
         # Initialize an empty list to store predictions
         predictions = []
+        header.append("is_promote")
+        predictions.append(header)
+        # Map header to indices for quick lookup
+        header_to_index = {col_name: index for index, col_name in enumerate(header)}
 
-        # Loop through each input in the input list
-        for input_row in input_list:
-            # Convert the current input row to a pandas DataFrame
-            input_df = pd.DataFrame([input_row], columns=feature_cols)
+        # Loop through each data row in the input list
+        for input_row in data_rows:
+            # print("current row raw -> ",input_row)
+            # Create a list to hold the data for the required features
+            selected_data = [input_row[header_to_index[col]] for col in feature_cols]
             
+            # Convert the selected_data to a pandas DataFrame
+            input_df = pd.DataFrame([selected_data], columns=feature_cols)
+            # print("current row -> ",input_df)
             # Call predictEmp with the current input DataFrame
             prediction = predictEmp(input_df)
-            
+            # print("pred is ",prediction)
             # Append the prediction to the predictions list
-            predictions.append(prediction.item())
+            selected_data.append(prediction.item())
+            if prediction is not None:
+                predictions.append(selected_data)
+            else:
+                # Handle the error case, perhaps append a default value or log the error
+                predictions.append(None)
         
         # Return the list of predictions as JSON
         return jsonify({'message': "success", "pred": predictions})
     except Exception as e:
-        print("error in api_predict_json_list ->", str(e))
+        print("error in api_predict_json_list ->",str(e))
         return jsonify({'message': "error", 'error': str(e)}), 400
+
+
     
 @app.route('/')
 def index():
