@@ -1,4 +1,4 @@
-/api/predict/jsonList method(post)
+/api/predict/json method(post)
 body{
     "list": ["Sales & Marketing","Bachelor's","sourcing",1,5,3,0,50]
 }
