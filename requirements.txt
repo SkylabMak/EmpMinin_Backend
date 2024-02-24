@@ -5,10 +5,6 @@ pandas
 joblib 
 xgboost
 Pipeline
-SimpleImputer
-StandardScaler
-OneHotEncoder
-ColumnTransformer
 request
 reqparse
 Api
