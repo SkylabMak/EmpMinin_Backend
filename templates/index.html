@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predict Yield</title>
+</head>
+<body>
+    <h2>Yield Prediction Form</h2>
+    {% if feats is defined %}
+    <h3>Prediction: {{ feats }}</h3>
+    <h3>Prediction: {{ zip }}</h3>
+    <h3>Prediction: {{ range }}</h3>
+    <h3>Prediction: {{ len }}</h3>
+    <h3>Prediction: {{ list }}</h3>
+    {% endif %}
+    <form action="/predict" method="post">
+        <label for="AverageRainingDays">Average Raining Days:</label>
+        <input type="number" step="any" id="AverageRainingDays" name="AverageRainingDays" required><br><br>
+
+        <label for="clonesize">Clone Size:</label>
+        <input type="number" step="any" id="clonesize" name="clonesize" required><br><br>
+
+        <label for="AverageOfLowerTRange">Average Of Lower T Range:</label>
+        <input type="number" step="any" id="AverageOfLowerTRange" name="AverageOfLowerTRange" required><br><br>
+
+        <label for="AverageOfUpperTRange">Average Of Upper T Range:</label>
+        <input type="number" step="any" id="AverageOfUpperTRange" name="AverageOfUpperTRange" required><br><br>
+
+        <label for="honeybee">Honeybee:</label>
+        <input type="number" step="any" id="honeybee" name="honeybee" required><br><br>
+
+        <label for="osmia">Osmia:</label>
+        <input type="number" step="any" id="osmia" name="osmia" required><br><br>
+
+        <label for="bumbles">Bumbles:</label>
+        <input type="number" step="any" id="bumbles" name="bumbles" required><br><br>
+
+        <label for="andrena">Andrena:</label>
+        <input type="number" step="any" id="andrena" name="andrena" required><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+    <h2>Predict Form</h2>
+    <form action="/api/predict" method="post">
+        <label for="singleInput">Input Features:</label><br>
+        <input type="text" id="singleInput" name="single input" value="[0.25, 37, 50, 70, 0.75, 0.25, 0.25, 0.25]"><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if pred is defined %}
+    <h3>Prediction: {{ pred }}</h3>
+{% endif %}
+</body>
+</html>
