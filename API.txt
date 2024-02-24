@@ -18,7 +18,6 @@ body{
 }
 }
 response{
-{
     "message": "success",
     "pred": [
         [
@@ -37,10 +36,14 @@ response{
             "is_promote"
         ],
         [
+            65438,
             "Sales & Marketing",
+            "region_7",
             "Master's & above",
+            "f",
             "sourcing",
             1,
+            35,
             5,
             8,
             0,
@@ -48,10 +51,14 @@ response{
             0
         ],
         [
+            49017,
             "Sales & Marketing",
+            "region_7",
             "Bachelor's",
+            "f",
             "sourcing",
             "1",
+            "35",
             "5",
             "3",
             "0",
@@ -59,5 +66,4 @@ response{
             1
         ]
     ]
-}
 }

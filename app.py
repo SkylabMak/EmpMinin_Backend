@@ -99,9 +99,9 @@ def api_predict_json_list():
             prediction = predictEmp(input_df)
             # print("pred is ",prediction)
             # Append the prediction to the predictions list
-            selected_data.append(prediction.item())
+            input_row.append(prediction.item())
             if prediction is not None:
-                predictions.append(selected_data)
+                predictions.append(input_row)
             else:
                 # Handle the error case, perhaps append a default value or log the error
                 predictions.append(None)
