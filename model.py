@@ -12,6 +12,7 @@ curr_path = os.path.dirname(os.path.realpath(__file__))
 xgb_modelEmp = joblib.load(curr_path + "/model/xgb_model.joblib")
 fitted_pipeline = joblib.load(curr_path + "/model/fitted_pipeline.joblib")
 clustering  = joblib.load(curr_path + "/model/clustering_model.joblib")
+scaler  = joblib.load(curr_path + "/model/scaler.joblib")
 
 
 id_dep_columns = ["employee_id","is_promoted","gender","age","region"]
@@ -33,8 +34,10 @@ def predictEmp(attributes: pd.DataFrame):
         # Select columns for clustering
         X_clus = attributes[["length_of_service", "avg_training_score", "awards_won"]]
         
+        new_X_clus_scaled = scaler.transform(X_clus)
+        
         # Apply clustering model to generate cluster labels
-        n_cluster = clustering.predict(X_clus)
+        n_cluster = clustering.predict(new_X_clus_scaled)
         
         # Add cluster labels to the attributes DataFrame
         attributes['n_cluster'] = n_cluster
