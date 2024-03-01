@@ -13,6 +13,7 @@ import os
 import json
 
 from model import predictEmp
+from model import predictEmp2
 
 curr_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -97,6 +98,49 @@ def api_predict_json_list():
             # print("current row -> ",input_df)
             # Call predictEmp with the current input DataFrame
             prediction = predictEmp(input_df)
+            # print("pred is ",prediction)
+            # Append the prediction to the predictions list
+            input_row.append(prediction.item())
+            if prediction is not None:
+                predictions.append(input_row)
+            else:
+                # Handle the error case, perhaps append a default value or log the error
+                predictions.append(None)
+        
+        # Return the list of predictions as JSON
+        return jsonify({'message': "success", "pred": predictions})
+    except Exception as e:
+        print("error in api_predict_json_list ->",str(e))
+        return jsonify({'message': "error", 'error': str(e)}), 400
+
+
+@app.route('/api/predict/jsonList2', methods=['POST'])
+def api_predict_json_list2():
+    try:
+        # Extract the list of inputs from the request JSON, skipping the header
+        full_input_list = request.json['list']
+        header = full_input_list[0]  # This is your header row
+        data_rows = full_input_list[1:]  # Skip the header row for processing
+        # print("all row",data_rows)
+        
+        # Initialize an empty list to store predictions
+        predictions = []
+        header.append("is_promote")
+        predictions.append(header)
+        # Map header to indices for quick lookup
+        header_to_index = {col_name: index for index, col_name in enumerate(header)}
+
+        # Loop through each data row in the input list
+        for input_row in data_rows:
+            # print("current row raw -> ",input_row)
+            # Create a list to hold the data for the required features
+            selected_data = [input_row[header_to_index[col]] for col in feature_cols]
+            
+            # Convert the selected_data to a pandas DataFrame
+            input_df = pd.DataFrame([selected_data], columns=feature_cols)
+            # print("current row -> ",input_df)
+            # Call predictEmp with the current input DataFrame
+            prediction = predictEmp2(input_df)
             # print("pred is ",prediction)
             # Append the prediction to the predictions list
             input_row.append(prediction.item())
